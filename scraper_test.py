@@ -46,9 +46,9 @@ def scraper(str_url_master, num_page_range):
 			if str_title:
 				str_title = str_title[0].text
 			
-			list_all_p.append([str_date, str_price, str_hood, str_housing])
+			list_all_p.append([str_title, str_date, str_price, str_hood, str_housing])
 
-	df_all_p = pd.DataFrame(list_all_p, columns = ['Date', 'Price', 'Neighborhood', 'Housing'])
+	df_all_p = pd.DataFrame(list_all_p, columns = ['Title', 'Date', 'Price', 'Neighborhood', 'Housing'])
 
 	########################################################################
 	## FORMATTING
@@ -59,8 +59,11 @@ def scraper(str_url_master, num_page_range):
 	########################################################################
 	## EXPORTING
 	########################################################################
-	#writer_temp = pd.ExcelWriter('temp.xlsx')
-	#df_all_p.to_excel(writer_temp, 'full', index = False)
-	#writer_temp.save()
-	#writer_temp.close() 
+
 	return df_all_p
+
+str_url_master = "https://losangeles.craigslist.org/d/housing/search/hhh"
+num_page_range = 2
+
+df = scraper(str_url_master, num_page_range)
+df.to_csv('output.csv', index = False)
